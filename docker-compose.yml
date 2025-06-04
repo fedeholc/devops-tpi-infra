@@ -1,0 +1,50 @@
+services:
+  webserver:
+    image: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+      - mysql
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234FH80*
+      MYSQL_DATABASE: pp4
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ../backend/sql/db-init.sql:/docker-entrypoint-initdb.d/01-db-init.sql:ro
+      - ../backend/sql/db-schema.sql:/docker-entrypoint-initdb.d/02-db-schema.sql:ro
+      - ../backend/sql/db-seeds.sql:/docker-entrypoint-initdb.d/03-db-seeds.sql:ro
+
+  backend:
+    build: ../backend
+    depends_on:
+      - mysql
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=1234FH80*
+      - DB_NAME=pp4
+      - DB_PORT=3306
+      - ADDRESS=backend
+    volumes:
+      - ../backend/.env:/usr/src/app/.env:ro
+
+  frontend:
+    build: ../frontend
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost
+
+volumes:
+  mysql-data:

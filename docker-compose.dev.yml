@@ -24,7 +24,7 @@ services:
       - ./sql/db-seeds.sql:/docker-entrypoint-initdb.d/03-db-seeds.sql:ro
 
   backend:
-    image: fedeusername/pp4-backend:latest
+    build: ../backend
     depends_on:
       - mysql
     ports:
@@ -36,9 +36,11 @@ services:
       - DB_NAME=pp4
       - DB_PORT=3306
       - ADDRESS=backend
+    volumes:
+      - ../backend/.env:/usr/src/app/.env:ro
 
   frontend:
-    image: fedeusername/pp4-frontend:latest
+    build: ../frontend
     ports:
       - "3000:80"
     environment:

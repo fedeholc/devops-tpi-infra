@@ -125,7 +125,7 @@ backend:
   environment:
     - DB_HOST=mysql # En lugar de localhost
     - DB_USER=root
-    - DB_PASSWORD=1234FH80*
+    - DB_PASSWORD=1234
     - DB_NAME=pp4
     - DB_PORT=3306
     - ADDRESS=backend # En lugar de localhost

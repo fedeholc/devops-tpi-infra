@@ -14,6 +14,13 @@ Entregables
    • Diagrama del pipeline DevOps. //TODO: ya están hechos, falta pasarlos a imagenes. Pero tener en cuenta que el workflow del backend tiene actualmente deshabilitado el testing porque los tests actuales requieren de la base de datos y eso no se puede hacer en el workflow de GitHub Actions.  
    • Conclusiones y roles del equipo. //TODO: pendiente
 
+//TODO faltarían los puntos opcionales:
+
+6. Infraestructura como Código (IaC) – Opcional avanzado
+   ●​ Usar Terraform o Ansible para provisionar infraestructura.
+7. Monitoreo – Opcional
+   ●​ Agregar Prometheus + Grafana, o integración con logs.
+
 ---
 
 # Tabla de Contenidos <!-- omit in toc -->

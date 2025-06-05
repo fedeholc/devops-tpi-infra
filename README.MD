@@ -11,7 +11,7 @@ Entregables
 2. Documento PDF o README con:
    • Descripción del proyecto.
    • Instrucciones para correrlo localmente con Docker.
-   • Diagrama del pipeline DevOps. //TODO: ya están hechos, falta pasarlos a imagenes. Pero tener en cuenta que el workflow del backend tiene actualmente deshabilitado el testing porque los tests actuales requieren de la base de datos y eso no se puede hacer en el workflow de GitHub Actions.  
+   • Diagrama del pipeline DevOps. //TODO: ya están hechos, falta pasarlos a imagenes. Pero tener en cuenta que el workflow del backend tiene actualmente deshabilitado el testing porque los tests actuales requieren de la base de datos y eso no se puede hacer en el workflow de GitHub Actions. //TODO y también falta probar que funcionen los tests del frontend cuando los tengamos.
    • Conclusiones y roles del equipo. //TODO: pendiente
 
 //TODO faltarían los puntos opcionales:

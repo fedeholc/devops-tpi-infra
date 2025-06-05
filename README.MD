@@ -20,6 +20,18 @@ Entregables
 
 Este proyecto contiene la aplicación web desarrollada para la materia Prácticas Profesionalizantes IV (PP4), junto con las herramientas necesarias para poder tener un entorno de desarrollo y despliegue automatizado utilizando prácticas de DevOps: contenerización, integración continua, y entega/despliegue continuo (CI/CD).
 
+### La aplicación
+
+La aplicación cuenta con un frontend desarrollado en React y un backend desarrollado en Node.js con Express. El frontend consume una API proporcionada por el backend, que a su vez interactúa con una base de datos MySQL.
+El frontend y el backend se encuentran en repositorios separados, pero se orquestan juntos utilizando Docker Compose.
+
+### Integración con Docker Compose
+
+Además de los repositorios del frontend y backend, tenemos el repositorio de infraestructura que contiene un archivo `docker-compose.yml` para orquestar los contenedores del frontend, backend, base de datos y servidor Nginx. 
+
+
+
+
 ## Repositorios en GitHub
 
 ### Frontend

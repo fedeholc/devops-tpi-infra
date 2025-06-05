@@ -32,6 +32,7 @@ Entregables
   - [Para correr el entorno de desarrollo local:](#para-correr-el-entorno-de-desarrollo-local)
   - [Para correr localmente utilizando las imágenes de Docker Hub (producción):](#para-correr-localmente-utilizando-las-imágenes-de-docker-hub-producción)
 - [Despliegue automático a producción (AWS EC2) con GitHub Actions](#despliegue-automático-a-producción-aws-ec2-con-github-actions)
+- [Diagrama del docker-compose funcionando en producción](#diagrama-del-docker-compose-funcionando-en-producción)
 - [Diagrama del pipeline DevOps](#diagrama-del-pipeline-devops)
 
 ---
@@ -189,6 +190,10 @@ Los workflows se activan al hacer push a la rama `main` de los repositorios. El 
 4. **Infraestructura en EC2**: utiliza docker-compose para levantar los servicios de Nginx, frontend, backend y MySQL.
 5. **Servicios en ejecución**: Nginx actúa como proxy reverso, y MySQL se inicializa con los scripts necesarios.
 6. **Flujo de datos en producción:** el frontend se comunica con el backend a través de Nginx, y el backend interactúa con la base de datos MySQL.
+
+## Diagrama del docker-compose funcionando en producción
+
+// TODO: está el diagrama, falta generarla imagen
 
 ## Diagrama del pipeline DevOps
 

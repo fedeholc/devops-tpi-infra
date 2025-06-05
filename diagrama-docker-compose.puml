@@ -1,0 +1,87 @@
+@startuml Docker Compose Architecture
+
+skinparam rectangle {
+   
+    BorderColor DarkBlue
+}
+
+skinparam arrow {
+    Color DarkBlue
+}
+
+cloud "AWS" as aws {
+    rectangle "EC2 Instance" as ec2 {
+        
+        rectangle "Nginx Webserver\n:80" as nginx
+        
+        rectangle "Frontend\n(React)\n:3000→80" as frontend
+        
+        rectangle "Backend\n(Node.js + Express)\n:5000" as backend
+        
+        rectangle "MySQL Database\n:3307→3306" as mysql
+        
+        storage "mysql-data\n(Volume)" as volume
+    }
+}
+
+cloud "Docker Hub" as dockerhub
+
+actor "Usuario" as user
+
+' Conexiones principales
+user --> nginx : "HTTP :80"
+nginx --> frontend : "Sirve contenido estático"
+nginx --> backend : "Proxy a API (:5000)"
+backend --> mysql : "Conexión BD\n(DB_HOST=mysql)"
+
+' Datos persistentes
+mysql --> volume : "Datos persistentes"
+
+' Imágenes desde Docker Hub
+dockerhub --> frontend : "Pull image"
+dockerhub --> backend : "Pull image"
+
+' Dependencias (representadas con líneas punteadas)
+nginx -.-> backend : depends_on
+nginx -.-> frontend : depends_on
+nginx -.-> mysql : depends_on
+backend -.-> mysql : depends_on
+
+note right of nginx
+Proxy reverso/Balanceador
+**Configuración:**
+- ./nginx.conf montado
+end note
+
+note right of frontend
+**Imagen:** fedeholc/pp4-frontend:latest
+end note
+
+note right of backend
+**Imagen:** fedeholc/pp4-backend:latest
+**Environment Variables:**
+- DB_HOST=mysql
+- DB_USER=root
+- DB_PASSWORD=1234FH80*
+- DB_NAME=pp4
+- DB_PORT=3306
+- ADDRESS=backend
+end note
+
+note right of mysql
+**Base de datos pp4**
+**Scripts SQL montados:**
+- db-init.sql
+- db-schema.sql
+- db-seeds.sql
+**Variables:**
+- MYSQL_ROOT_PASSWORD=1234FH80*
+- MYSQL_DATABASE=pp4
+end note
+
+note top of ec2
+**Docker Compose**
+Aplicación containerizada
+end note
+
+@enduml

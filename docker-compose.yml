@@ -41,8 +41,6 @@ services:
     image: fedeholc/pp4-frontend:latest
     ports:
       - "3000:80"
-    environment:
-      - VITE_API_URL=http://backend:5000/api
 
 volumes:
   mysql-data:

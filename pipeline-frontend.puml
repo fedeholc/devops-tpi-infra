@@ -1,0 +1,48 @@
+
+@startuml Pipeline Despliegue Frontend
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam handwritten false
+skinparam shadowing false
+
+title Pipeline de Despliegue - Frontend
+
+actor Desarrollador as dev
+participant "Repositorio GitHub\n(devops-tpi-front)" as gh_front
+participant "GitHub Actions\n(CI/CD Frontend)" as ga_front
+participant "Docker Hub" as dh
+participant "Instancia AWS EC2" as ec2
+
+dev -> gh_front: git push (rama main)
+activate gh_front
+
+gh_front -> ga_front: Disparar Workflow\n(al hacer push a main)
+activate ga_front
+ga_front -> ga_front: **Job: build-test**\n1. Descargar código\n2. Configurar Node.js 22\n3. npm ci (Instalar dependencias)\n4. npm run build (Construir aplicación)
+note right: Pruebas son TODO
+
+ga_front -> ga_front: **Job: build-and-push**\n(depende de: build-test, si: rama main)\n1. Descargar código\n2. Configurar Docker Buildx\n3. Iniciar sesión en Docker Hub\n   (secrets.DOCKERHUB_USERNAME, secrets.DOCKERHUB_TOKEN)\n4. Extraer metadatos (imagen: fedeholc/pp4-frontend)\n5. Construir y subir imagen Docker
+note right of ga_front
+  Imagen: fedeholc/pp4-frontend:latest
+  Plataforma: linux/amd64
+end note
+ga_front -> dh: Subir fedeholc/pp4-frontend:latest
+activate dh
+
+ga_front -> ga_front: **Job: deploy**\n(depende de: build-and-push, si: rama main)\n1. Conexión SSH a Instancia EC2\n   (secrets.EC2_HOST, secrets.EC2_USERNAME, secrets.EC2_SSH_KEY)
+ga_front -> ec2: Conexión SSH
+activate ec2
+ec2 -> ec2: cd /home/ubuntu/devops-tpi-infra
+ec2 -> ec2: docker-compose pull frontend
+note right: Desde Docker Hub
+ec2 -> ec2: docker-compose stop frontend
+ec2 -> ec2: docker-compose rm -f frontend
+ec2 -> ec2: docker-compose up -d frontend
+ec2 -> ec2: docker image prune -f
+ec2 -> ec2: Verificar servicio y mostrar logs
+deactivate ec2
+deactivate dh
+deactivate ga_front
+deactivate gh_front
+
+@enduml

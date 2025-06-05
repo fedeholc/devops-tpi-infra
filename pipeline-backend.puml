@@ -1,0 +1,54 @@
+@startuml Pipeline Despliegue Backend con Test
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam handwritten false
+skinparam shadowing false
+
+title Pipeline de Despliegue - Backend (con Job de Test)
+
+actor Desarrollador as dev
+participant "Repositorio GitHub\n(devops-tpi-backend)" as gh_back
+participant "GitHub Actions\n(CI/CD Backend)" as ga_back
+participant "Docker Hub" as dh
+participant "Instancia AWS EC2" as ec2
+
+dev -> gh_back: git push (rama main)
+activate gh_back
+
+gh_back -> ga_back: Disparar Workflow\n(al hacer push a main)
+activate ga_back
+
+ga_back -> ga_back: **Job: test**\n(runs-on: ubuntu-latest)\n1. Descargar código\n2. Configurar Node.js 22 (cache: npm)\n3. Instalar dependencias (npm ci)\n4. Ejecutar pruebas (npm test)
+note right: Este job se ejecuta.
+
+ga_back -> ga_back: **Job: build-and-push**\n(si: rama main)\n' Note: "needs: test" está deshabilitado temporalmente,\n' por lo que este job no espera a que "test" finalice.\n1. Descargar código\n2. Configurar Docker Buildx\n3. Iniciar sesión en Docker Hub\n   (secrets.DOCKERHUB_USERNAME, secrets.DOCKERHUB_TOKEN)\n4. Extraer metadatos (imagen: fedeholc/pp4-backend)\n5. Construir y subir imagen Docker
+note right of ga_back
+  Imagen: fedeholc/pp4-backend:latest
+  Plataformas: linux/amd64, linux/arm64
+end note
+ga_back -> dh: Subir fedeholc/pp4-backend:latest
+activate dh
+
+ga_back -> ga_back: **Job: deploy**\n(depende de: build-and-push, si: rama main)\n1. Conexión SSH a Instancia EC2\n   (secrets.EC2_HOST, secrets.EC2_USERNAME, secrets.EC2_SSH_KEY)
+ga_back -> ec2: Conexión SSH
+activate ec2
+ec2 -> ec2: cd /home/ubuntu/devops-tpi-infra
+ec2 -> ec2: echo "🚀 Iniciando deployment del backend..."
+ec2 -> ec2: docker-compose pull backend
+note right: Desde Docker Hub
+ec2 -> ec2: docker-compose stop backend
+ec2 -> ec2: docker-compose rm -f backend
+ec2 -> ec2: docker-compose up -d backend
+ec2 -> ec2: sleep 5
+ec2 -> ec2: docker image prune -f
+ec2 -> ec2: echo "🔍 Verificando estado del backend..."
+ec2 -> ec2: docker-compose ps backend
+ec2 -> ec2: echo "📋 Últimos logs del backend:"
+ec2 -> ec2: docker-compose logs --tail=20 backend
+ec2 -> ec2: echo "✅ Backend desplegado exitosamente!"
+deactivate ec2
+deactivate dh
+deactivate ga_back
+deactivate gh_back
+
+@enduml

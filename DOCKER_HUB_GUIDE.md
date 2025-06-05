@@ -19,16 +19,16 @@ docker login
 cd backend
 
 # Construir la imagen
-docker build -t fedeusername/pp4-backend:latest .
+docker build -t username/pp4-backend:latest .
 
 # Opcional: Crear tag con versión específica
-docker tag fedeusername/pp4-backend:latest fedeusername/pp4-backend:v1.0.0
+docker tag username/pp4-backend:latest username/pp4-backend:v1.0.0
 
 # Subir la imagen a Docker Hub
-docker push fedeusername/pp4-backend:latest
+docker push username/pp4-backend:latest
 
 # Opcional: Subir también la versión específica
-docker push fedeusername/pp4-backend:v1.0.0
+docker push username/pp4-backend:v1.0.0
 ```
 
 ### 2. Frontend
@@ -38,16 +38,16 @@ docker push fedeusername/pp4-backend:v1.0.0
 cd ../frontend
 
 # Construir la imagen
-docker build -t fedeusername/pp4-frontend:latest .
+docker build -t username/pp4-frontend:latest .
 
 # Opcional: Crear tag con versión específica
-docker tag fedeusername/pp4-frontend:latest fedeusername/pp4-frontend:v1.0.0
+docker tag username/pp4-frontend:latest username/pp4-frontend:v1.0.0
 
 # Subir la imagen a Docker Hub
-docker push fedeusername/pp4-frontend:latest
+docker push username/pp4-frontend:latest
 
 # Opcional: Subir también la versión específica
-docker push fedeusername/pp4-frontend:v1.0.0
+docker push username/pp4-frontend:v1.0.0
 ```
 
 ## Script automatizado
@@ -59,7 +59,7 @@ Puedes crear un script para automatizar todo el proceso:
 
 # Script para construir y subir imágenes a Docker Hub
 
-DOCKERHUB_USERNAME="fedeusername"
+DOCKERHUB_USERNAME="username"
 VERSION="latest"
 
 echo "🔑 Haciendo login en Docker Hub..."
@@ -92,22 +92,22 @@ cd ..
 docker images
 
 # Eliminar imagen local
-docker rmi fedeusername/pp4-backend:latest
+docker rmi username/pp4-backend:latest
 
 # Ver información de una imagen
-docker inspect fedeusername/pp4-backend:latest
+docker inspect username/pp4-backend:latest
 
 # Descargar imagen desde Docker Hub
-docker pull fedeusername/pp4-backend:latest
+docker pull username/pp4-backend:latest
 
 # Ejecutar imagen localmente para probar
-docker run -p 5000:5000 fedeusername/pp4-backend:latest
-docker run -p 3000:80 fedeusername/pp4-frontend:latest
+docker run -p 5000:5000 username/pp4-backend:latest
+docker run -p 3000:80 username/pp4-frontend:latest
 ```
 
 ## Notas importantes
 
-1. **Reemplaza `fedeusername`** con tu nombre de usuario real de Docker Hub
+1. **Reemplaza `username`** con tu nombre de usuario real de Docker Hub
 2. **Variables de entorno:** El backend NO incluye el archivo `.env` en la imagen, usa las variables de entorno del docker-compose
 3. **Configuración de producción:** En producción, el backend toma la configuración de DB desde las variables de entorno definidas en docker-compose.yml
 4. **Tamaño de imagen:** Se usa `.dockerignore` para excluir archivos innecesarios
@@ -121,7 +121,7 @@ Las variables se definen en `docker-compose.yml`:
 
 ```yaml
 backend:
-  image: fedeusername/pp4-backend:latest
+  image: username/pp4-backend:latest
   environment:
     - DB_HOST=mysql # En lugar de localhost
     - DB_USER=root
@@ -140,7 +140,7 @@ backend:
 
 Después de subir las imágenes, puedes verificar que estén disponibles:
 
-- Ve a https://hub.docker.com/u/fedeusername
+- Ve a https://hub.docker.com/u/username
 - Deberías ver `pp4-backend` y `pp4-frontend` en tu lista de repositorios
 
 ## Troubleshooting

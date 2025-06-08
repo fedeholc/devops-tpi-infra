@@ -15,7 +15,7 @@ Entregables
    • Código fuente de la app.
    • Dockerfile y docker-compose.
    • Scripts de CI/CD.
-   • Capturas del pipeline en ejecución. //TODO: pendiente
+   • Capturas del pipeline en ejecución.
 
 2. Documento PDF o README con:
    • Descripción del proyecto.
@@ -52,6 +52,7 @@ Entregables
 - [Diagrama del docker-compose funcionando en producción](#diagrama-del-docker-compose-funcionando-en-producción)
 - [Diagrama del pipeline del frontend](#diagrama-del-pipeline-del-frontend)
 - [Diagrama del pipeline del backend](#diagrama-del-pipeline-del-backend)
+- [Capturas del pipeline en ejecución](#capturas-del-pipeline-en-ejecución)
 
 ---
 
@@ -219,12 +220,43 @@ Los workflows se activan al hacer push a la rama `main` de los repositorios. El 
 
 ## Diagrama del docker-compose funcionando en producción
 
-![alt text](diagrama-docker-compose.png)
+![diagrama docker-compose](diagrama-docker-compose.png)
 
 ## Diagrama del pipeline del frontend
 
-![alt text](diagrama-pipeline-frontend.png)
+![diagrama pipeline frontend](diagrama-pipeline-frontend.png)
 
 ## Diagrama del pipeline del backend
 
-![alt text](diagrama-pipeline-backend.png)
+![diagrama pipeline backend](diagrama-pipeline-backend.png)
+
+## Capturas del pipeline en ejecución
+
+- Archivos con las imágenes de las capturas del pipeline del frontend: ver carpeta `capturas-pipeline-frontend/`
+- Archivos con las imágenes de las capturas del pipeline del backend: ver carpeta `capturas-pipeline-backend/`
+
+**Pipeline Frontend**
+
+![pipeline front](./capturas-pipeline-frontend/captura-pipeline-frontend-01.png)
+![pipeline front](./capturas-pipeline-frontend/captura-pipeline-frontend-02.png)
+![pipeline front](./capturas-pipeline-frontend/captura-pipeline-frontend-03.png)
+![pipeline front](./capturas-pipeline-frontend/captura-pipeline-frontend-04.png)
+![pipeline front](./capturas-pipeline-frontend/captura-pipeline-frontend-05.png)
+![pipeline front](./capturas-pipeline-frontend/captura-pipeline-frontend-06.png)
+![pipeline front](./capturas-pipeline-frontend/captura-pipeline-frontend-07.png)
+![pipeline front](./capturas-pipeline-frontend/captura-pipeline-frontend-08.png)
+![pipeline front](./capturas-pipeline-frontend/captura-pipeline-frontend-09.png)
+
+**Pipeline Backend**
+
+![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-01.png)
+![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-02.png)
+![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-03.png)
+![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-04.png)
+![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-05.png)
+![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-06.png)
+![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-07.png)
+![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-08.png)
+![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-09.png)
+
+---

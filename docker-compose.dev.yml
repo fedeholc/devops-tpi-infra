@@ -13,7 +13,7 @@ services:
   mysql:
     image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 1234FH80*
+      MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: pp4
     ports:
       - "3307:3306"

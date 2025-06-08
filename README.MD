@@ -35,6 +35,7 @@ Entregables
 # Tabla de Contenidos <!-- omit in toc -->
 
 - [Descripción del proyecto](#descripción-del-proyecto)
+- [Proyecto corriendo online](#proyecto-corriendo-online)
 - [Repositorios en GitHub](#repositorios-en-github)
   - [Frontend](#frontend)
   - [Backend](#backend)
@@ -60,6 +61,12 @@ Este proyecto contiene la aplicación web desarrollada para la materia Práctica
 
 La aplicación cuenta con un frontend desarrollado en React y un backend desarrollado en Node.js con Express. El frontend consume una API proporcionada por el backend, que a su vez interactúa con una base de datos MySQL.
 El frontend y el backend se encuentran en repositorios separados, pero se orquestan juntos utilizando Docker Compose.
+
+## Proyecto corriendo online
+
+Se puede acceder a la aplicación en producción (instancia EC2 en AWS) en el siguiente enlace:
+
+http://18.220.163.22/
 
 ## Repositorios en GitHub
 

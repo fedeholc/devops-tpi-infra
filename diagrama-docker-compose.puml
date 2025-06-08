@@ -59,13 +59,7 @@ end note
 
 note right of backend
 **Imagen:** fedeholc/pp4-backend:latest
-**Environment Variables:**
-- DB_HOST=mysql
-- DB_USER=root
-- DB_PASSWORD=1234FH80*
-- DB_NAME=pp4
-- DB_PORT=3306
-- ADDRESS=backend
+
 end note
 
 note right of mysql
@@ -74,9 +68,7 @@ note right of mysql
 - db-init.sql
 - db-schema.sql
 - db-seeds.sql
-**Variables:**
-- MYSQL_ROOT_PASSWORD=1234FH80*
-- MYSQL_DATABASE=pp4
+ 
 end note
 
 note top of ec2

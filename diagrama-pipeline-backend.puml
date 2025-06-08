@@ -1,7 +1,6 @@
 @startuml Pipeline Despliegue Backend con Test
 !theme plain
 skinparam backgroundColor #FFFFFF
-skinparam handwritten false
 skinparam shadowing false
 
 title Pipeline de Despliegue - Backend (con Job de Test)
@@ -19,7 +18,7 @@ gh_back -> ga_back: Disparar Workflow\n(al hacer push a main)
 activate ga_back
 
 ga_back -> ga_back: **Job: test**\n(runs-on: ubuntu-latest)\n1. Descargar código\n2. Configurar Node.js 22 (cache: npm)\n3. Instalar dependencias (npm ci)\n4. Ejecutar pruebas (npm test)
-note right: Este job se ejecuta.
+note right: Tests.
 
 ga_back -> ga_back: **Job: build-and-push**\n(si: rama main)\n' Note: "needs: test" está deshabilitado temporalmente,\n' por lo que este job no espera a que "test" finalice.\n1. Descargar código\n2. Configurar Docker Buildx\n3. Iniciar sesión en Docker Hub\n   (secrets.DOCKERHUB_USERNAME, secrets.DOCKERHUB_TOKEN)\n4. Extraer metadatos (imagen: fedeholc/pp4-backend)\n5. Construir y subir imagen Docker
 note right of ga_back

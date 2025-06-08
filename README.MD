@@ -1,4 +1,13 @@
-# Trabajo Práctico Integrador de DevOps <!-- omit in toc -->
+# Seminario de Actualización dev ops - 3°B <!-- omit in toc -->
+
+## Trabajo Práctico Integrador <!-- omit in toc -->
+
+### Equipo:
+
+- **Federico Holc** (comisión B)
+- **Iris Zamora** (comisión A)
+- **Martín López** (comisión B)
+- **Agustina Kopistinski** (comisión A)
 
 Entregables
 
@@ -11,7 +20,7 @@ Entregables
 2. Documento PDF o README con:
    • Descripción del proyecto.
    • Instrucciones para correrlo localmente con Docker.
-   • Diagrama del pipeline DevOps. //TODO: ya están hechos, falta pasarlos a imagenes. Pero tener en cuenta que el workflow del backend tiene actualmente deshabilitado el testing porque los tests actuales requieren de la base de datos y eso no se puede hacer en el workflow de GitHub Actions. //TODO y también falta probar que funcionen los tests del frontend cuando los tengamos.
+   • Diagrama del pipeline DevOps.  
    • Conclusiones y roles del equipo. //TODO: pendiente
 
 //TODO faltarían los puntos opcionales:
@@ -40,7 +49,8 @@ Entregables
   - [Para correr localmente utilizando las imágenes de Docker Hub (producción):](#para-correr-localmente-utilizando-las-imágenes-de-docker-hub-producción)
 - [Despliegue automático a producción (AWS EC2) con GitHub Actions](#despliegue-automático-a-producción-aws-ec2-con-github-actions)
 - [Diagrama del docker-compose funcionando en producción](#diagrama-del-docker-compose-funcionando-en-producción)
-- [Diagrama del pipeline DevOps](#diagrama-del-pipeline-devops)
+- [Diagrama del pipeline del frontend](#diagrama-del-pipeline-del-frontend)
+- [Diagrama del pipeline del backend](#diagrama-del-pipeline-del-backend)
 
 ---
 
@@ -72,7 +82,9 @@ https://github.com/fedeholc/devops-tpi-infra
 Contiene:
 
 - Documentación del proyecto.
-- Diagrama del pipeline DevOps. **PENDIENTE**
+- Diagrama del docker-compose funcionando en producción.
+- Diagrama del pipeline del frontend.
+- Diagrama del pipeline del backend.
 - Capturas del pipeline en ejecución. **PENDIENTE**
 - Archivo docker compose para orquestar los contenedores del frontend, backend, base de datos y servidor Nginx.
 - Archivos con scripts de MySql para crear la base de datos y las tablas necesarias.
@@ -200,8 +212,12 @@ Los workflows se activan al hacer push a la rama `main` de los repositorios. El 
 
 ## Diagrama del docker-compose funcionando en producción
 
-// TODO: está el diagrama, falta generarla imagen
+![alt text](diagrama-docker-compose.png)
 
-## Diagrama del pipeline DevOps
+## Diagrama del pipeline del frontend
 
-// TODO: pendiente insertar diagramas de pipelines
+![alt text](diagrama-pipeline-frontend.png)
+
+## Diagrama del pipeline del backend
+
+![alt text](diagrama-pipeline-backend.png)

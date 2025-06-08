@@ -2,7 +2,6 @@
 @startuml Pipeline Despliegue Frontend
 !theme plain
 skinparam backgroundColor #FFFFFF
-skinparam handwritten false
 skinparam shadowing false
 
 title Pipeline de Despliegue - Frontend
@@ -19,7 +18,7 @@ activate gh_front
 gh_front -> ga_front: Disparar Workflow\n(al hacer push a main)
 activate ga_front
 ga_front -> ga_front: **Job: build-test**\n1. Descargar código\n2. Configurar Node.js 22\n3. npm ci (Instalar dependencias)\n4. npm run build (Construir aplicación)
-note right: Pruebas son TODO
+
 
 ga_front -> ga_front: **Job: build-and-push**\n(depende de: build-test, si: rama main)\n1. Descargar código\n2. Configurar Docker Buildx\n3. Iniciar sesión en Docker Hub\n   (secrets.DOCKERHUB_USERNAME, secrets.DOCKERHUB_TOKEN)\n4. Extraer metadatos (imagen: fedeholc/pp4-frontend)\n5. Construir y subir imagen Docker
 note right of ga_front

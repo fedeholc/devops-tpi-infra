@@ -25,8 +25,8 @@ Entregables
 
 //TODO faltarían los puntos opcionales:
 
-6. Infraestructura como Código (IaC) – Opcional avanzado
-   ●​ Usar Terraform o Ansible para provisionar infraestructura.
+6. ✅ Infraestructura como Código (IaC) – Completado
+   ●​ Implementado con Terraform para provisionar infraestructura en AWS.
 7. Monitoreo – Opcional
    ●​ Agregar Prometheus + Grafana, o integración con logs.
 
@@ -44,6 +44,11 @@ Entregables
   - [docker-compose.dev.yml (Desarrollo Local)](#docker-composedevyml-desarrollo-local)
   - [docker-compose.yml (Producción)](#docker-composeyml-producción)
   - [Servicios Comunes](#servicios-comunes)
+- [Infraestructura como Código con Terraform](#infraestructura-como-código-con-terraform)
+  - [Prerequisitos para Terraform](#prerequisitos-para-terraform)
+  - [Configuración de Terraform](#configuración-de-terraform)
+  - [Despliegue con Terraform](#despliegue-con-terraform)
+  - [Gestión de la infraestructura](#gestión-de-la-infraestructura)
 - [Instrucciones para correr la aplicación localmente](#instrucciones-para-correr-la-aplicación-localmente)
   - [Prerrequisitos](#prerrequisitos)
   - [Para correr el entorno de desarrollo local:](#para-correr-el-entorno-de-desarrollo-local)
@@ -97,7 +102,8 @@ Contiene:
 - Archivo docker compose para orquestar los contenedores del frontend, backend, base de datos y servidor Nginx.
 - Archivos con scripts de MySql para crear la base de datos y las tablas necesarias.
 - Script para automatizar build y despliegue de los contenedores.
-- Scripts de Terraform para crear los recursos en AWS. **PENDIENTE**
+- **Infraestructura como Código (IaC) con Terraform** para automatizar el despliegue en AWS.
+- Scripts de Terraform para crear los recursos en AWS. ✅ **COMPLETADO**
 
 ## Integración con Docker Compose
 
@@ -137,6 +143,150 @@ Ambos archivos comparten la siguiente arquitectura:
 - **MySQL (Puerto 3307)**: Base de datos con inicialización automática mediante scripts SQL ubicados en `./sql/`
 - **Volúmenes persistentes**: `mysql-data` para mantener los datos de la base de datos
 - **Red interna**: Todos los servicios se comunican a través de la red Docker interna
+
+## Infraestructura como Código con Terraform
+
+Este proyecto incluye una configuración completa de Terraform para automatizar el despliegue de la infraestructura en AWS. Terraform permite crear, modificar y versionar la infraestructura de manera declarativa y reproducible.
+
+### Prerequisitos para Terraform
+
+1. **Terraform instalado** (versión >= 1.0):
+   ```bash
+   # En Ubuntu/Debian
+   wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+   echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+   sudo apt update && sudo apt install terraform
+   ```
+
+2. **AWS CLI configurado** con credenciales válidas:
+   ```bash
+   # Instalar AWS CLI
+   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+   unzip awscliv2.zip
+   sudo ./aws/install
+   
+   # Configurar credenciales
+   aws configure
+   ```
+
+3. **Par de claves SSH** para acceso a la instancia:
+   ```bash
+   # Generar claves SSH si no las tienes
+   ssh-keygen -t rsa -b 4096 -C "tu-email@ejemplo.com"
+   ```
+
+### Configuración de Terraform
+
+1. **Navegar al directorio de Terraform:**
+   ```bash
+   cd terraform/
+   ```
+
+2. **Crear archivo de variables personalizado:**
+   ```bash
+   cp terraform.tfvars.example terraform.tfvars
+   ```
+
+3. **Editar `terraform.tfvars` con tus configuraciones:**
+   ```hcl
+   aws_region = "us-east-2"           # Región de AWS
+   environment = "prod"               # Ambiente de despliegue
+   instance_type = "t3.micro"         # Tipo de instancia (free tier elegible)
+   volume_size = 20                   # Tamaño del disco en GB
+   public_key_path = "~/.ssh/id_rsa.pub"  # Ruta a tu clave pública SSH
+   project_name = "devops-tpi"        # Nombre del proyecto
+   ```
+
+### Despliegue con Terraform
+
+1. **Inicializar Terraform:**
+   ```bash
+   terraform init
+   ```
+
+2. **Revisar el plan de ejecución:**
+   ```bash
+   terraform plan
+   ```
+
+3. **Aplicar la configuración:**
+   ```bash
+   terraform apply
+   ```
+   
+   Terraform te mostrará los recursos que va a crear y pedirá confirmación. Escribe `yes` para continuar.
+
+4. **Obtener información de la infraestructura creada:**
+   ```bash
+   terraform output
+   ```
+
+### Gestión de la infraestructura
+
+**Recursos que crea Terraform:**
+- **Instancia EC2** con Ubuntu 22.04 LTS
+- **Security Group** con puertos necesarios abiertos (22, 80, 3000, 5000, 3307)
+- **Elastic IP** para IP pública estática
+- **Key Pair** para acceso SSH
+- **Configuración automática** de Docker, Docker Compose y la aplicación
+
+**Comandos útiles:**
+
+```bash
+# Ver el estado actual de la infraestructura
+terraform show
+
+# Actualizar la infraestructura (si cambias archivos .tf)
+terraform plan
+terraform apply
+
+# Destruir toda la infraestructura
+terraform destroy
+
+# Ver outputs (IP pública, comandos SSH, etc.)
+terraform output
+
+# Conectarse a la instancia por SSH
+terraform output -raw ssh_connection_command
+```
+
+**Actualización automática de la aplicación:**
+- La instancia incluye un script `/home/ubuntu/app/update-app.sh` que puedes usar para actualizar las imágenes Docker
+- El pipeline de CI/CD puede ejecutar este script automáticamente vía SSH
+
+**Monitoreo y logs:**
+```bash
+# Conectarse a la instancia
+ssh -i ~/.ssh/id_rsa ubuntu@$(terraform output -raw instance_public_ip)
+
+# Ver logs de la aplicación
+cd /home/ubuntu/app
+docker-compose logs -f
+
+# Ver estado de los contenedores
+docker-compose ps
+```
+
+**Script Helper de Terraform:**
+
+Para facilitar el uso de Terraform, se incluye un script auxiliar `terraform-helper.sh` que automatiza las tareas más comunes:
+
+```bash
+# Hacer el script ejecutable (solo la primera vez)
+chmod +x terraform-helper.sh
+
+# Comandos disponibles:
+./terraform-helper.sh init      # Inicializar Terraform
+./terraform-helper.sh plan      # Ver plan de ejecución
+./terraform-helper.sh apply     # Desplegar infraestructura
+./terraform-helper.sh output    # Ver información de la infraestructura
+./terraform-helper.sh ssh       # Conectarse por SSH a la instancia
+./terraform-helper.sh status    # Verificar estado de la aplicación
+./terraform-helper.sh update    # Actualizar aplicación en la instancia
+./terraform-helper.sh logs      # Ver logs de la aplicación
+./terraform-helper.sh destroy   # Destruir infraestructura
+./terraform-helper.sh help      # Mostrar ayuda
+```
 
 ## Instrucciones para correr la aplicación localmente
 

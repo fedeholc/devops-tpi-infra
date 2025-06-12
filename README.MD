@@ -320,7 +320,7 @@ El desarrollo de este trabajo práctico integrador nos permitió aplicar en un p
 No hicimos una división formal de roles. Comenzamos generando el esqueleto del proyecto de manera colaborativa, podría decirse que en vivo y en directo mientras estabamos reunidos. Luego hicimos una lista de tareas pendientes y cada uno fue tomando las que podía ir haciendo. A medida que avanzábamos, nos ayudábamos mutuamente con las dudas y problemas que iban surgiendo.
 Algunos de los roles y tareas que asumimos fueron:
 
-- **Federico Holc**: configuración de Docker Compose, para modo producción y modo desarrollo.
+- **Federico Holc**: configuración de Docker Compose, documentación.
 - **Iris Zamora**: implementación de GitHub Actions para el backend y frontend,
 - **Agustina Kopistinski**: configuración de la base de datos MySQL, pruebas y validación de la aplicación.
 - **Martín López**: configuración de la infraestructura en AWS.

@@ -85,12 +85,11 @@ Contiene:
 - Diagrama del docker-compose funcionando en producción.
 - Diagrama del pipeline del frontend.
 - Diagrama del pipeline del backend.
-- Capturas del pipeline en ejecución. **PENDIENTE**
+- Capturas del pipeline en ejecución.
 - Archivo docker compose para orquestar los contenedores del frontend, backend, base de datos y servidor Nginx.
 - Archivos con scripts de MySql para crear la base de datos y las tablas necesarias.
 - Script para automatizar build y despliegue de los contenedores.
-- **Infraestructura como Código (IaC) con Terraform** para automatizar el despliegue en AWS.
-- Scripts de Terraform para crear los recursos en AWS. ✅ **COMPLETADO**
+- Script de Terraform para crear los recursos en AWS.
 
 ## Integración con Docker Compose
 

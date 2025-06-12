@@ -9,14 +9,6 @@
 - **Martín López** (comisión B)
 - **Agustina Kopistinski** (comisión A)
 
-Pendientes
-   • Conclusiones y roles del equipo. //TODO: pendiente
-
-//TODO faltarían los puntos opcionales:
-
-Monitoreo – Opcional
-   ●​ Agregar Prometheus + Grafana, o integración con logs.
-
 ---
 
 # Tabla de Contenidos <!-- omit in toc -->
@@ -48,6 +40,11 @@ Monitoreo – Opcional
 - [Infraestructura mínima con Terraform](#infraestructura-mínima-con-terraform)
   - [Pasos para usar Terraform](#pasos-para-usar-terraform)
   - [Notas](#notas)
+- [Conclusiones y roles del equipo](#conclusiones-y-roles-del-equipo)
+  - [Conclusiones generales](#conclusiones-generales)
+  - [Trabajo en equipo y roles](#trabajo-en-equipo-y-roles)
+  - [Dificultades encontradas](#dificultades-encontradas)
+  - [Aprendizajes principales](#aprendizajes-principales)
 
 ---
 
@@ -471,5 +468,37 @@ Este archivo crea una instancia EC2 con Ubuntu 22.04, un grupo de seguridad con 
   ```bash
   terraform destroy
   ```
+
+## Conclusiones y roles del equipo
+
+### Conclusiones generales
+
+El desarrollo de este trabajo práctico integrador nos permitió aplicar en un proyecto real los conceptos fundamentales de DevOps, desde la contenerización de aplicaciones hasta la automatización del despliegue en la nube. Pudimos experimentar de primera mano cómo las herramientas y buenas prácticas de DevOps facilitan la integración y entrega continua, mejorando la calidad y la velocidad del desarrollo.
+
+### Trabajo en equipo y roles
+
+No hicimos una división formal de roles. Comenzamos generando el esqueleto del proyecto de manera colaborativa, podría decirse que en vivo y en directo mientras estabamos reunidos. Luego hicimos una lista de tareas pendientes y cada uno fue tomando las que podía ir haciendo. A medida que avanzábamos, nos ayudábamos mutuamente con las dudas y problemas que iban surgiendo.
+Algunos de los roles y tareas que asumimos fueron:
+
+- **Federico Holc**: configuración de Docker Compose, para modo producción y modo desarrollo.
+- **Iris Zamora**: implementación de GitHub Actions para el backend y frontend,
+- **Agustina Kopistinski**: configuración de la base de datos MySQL, pruebas y validación de la aplicación.
+- **Martín López**: configuración de la infraestructura en AWS.
+
+### Dificultades encontradas
+
+Durante el desarrollo del trabajo nos enfrentamos a varios desafíos:
+
+- **Configuración de Docker Compose:** al principio, tuvimos dificultades para definir correctamente los servicios y las redes en Docker Compose, especialmente para lograr que el backend se conectara correctamente a la base de datos MySQL y que Nginx funcionara como proxy reverso.
+- **Despliegue en AWS:** la automatización del despliegue en AWS y la configuración de la instancia EC2 requirió investigar sobre permisos, claves SSH y reglas de seguridad.
+- **Integración de GitHub Actions:** configurar correctamente los pipelines de CI/CD para que construyeran las imágenes, las subieran a Docker Hub y luego actualizaran la instancia en AWS fue un proceso de prueba y error.
+- **Coordinación del equipo:** como trabajamos en paralelo en diferentes partes (frontend, backend, infraestructura), fue necesario coordinar bien los cambios y mantener una comunicación constante para evitar conflictos y asegurar la integración de todos los componentes.
+
+### Aprendizajes principales
+
+- **Automatización:** Aprendimos la importancia de automatizar tanto el despliegue como la infraestructura, lo que reduce errores y acelera la entrega de nuevas versiones.
+- **Contenerización:** Docker nos facilitó la portabilidad y la replicación del entorno de desarrollo y producción.
+- **CI/CD:** Implementar pipelines de integración y entrega continua nos ayudó a detectar errores rápidamente y a mantener la calidad del código.
+- **Trabajo colaborativo:** La experiencia de trabajar en equipo, usando Git y GitHub, nos enseñó la importancia de las buenas prácticas de colaboración y comunicación.
 
 ---

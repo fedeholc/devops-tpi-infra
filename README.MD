@@ -9,25 +9,12 @@
 - **Martín López** (comisión B)
 - **Agustina Kopistinski** (comisión A)
 
-Entregables
-
-1. Repositorio en GitHub/GitLab con:
-   • Código fuente de la app.
-   • Dockerfile y docker-compose.
-   • Scripts de CI/CD.
-   • Capturas del pipeline en ejecución.
-
-2. Documento PDF o README con:
-   • Descripción del proyecto.
-   • Instrucciones para correrlo localmente con Docker.
-   • Diagrama del pipeline DevOps.  
+Pendientes
    • Conclusiones y roles del equipo. //TODO: pendiente
 
 //TODO faltarían los puntos opcionales:
 
-6. ✅ Infraestructura como Código (IaC) – Completado
-   ●​ Implementado con Terraform para provisionar infraestructura en AWS.
-7. Monitoreo – Opcional
+Monitoreo – Opcional
    ●​ Agregar Prometheus + Grafana, o integración con logs.
 
 ---
@@ -58,6 +45,9 @@ Entregables
 - [Diagrama del pipeline del frontend](#diagrama-del-pipeline-del-frontend)
 - [Diagrama del pipeline del backend](#diagrama-del-pipeline-del-backend)
 - [Capturas del pipeline en ejecución](#capturas-del-pipeline-en-ejecución)
+- [Infraestructura mínima con Terraform](#infraestructura-mínima-con-terraform)
+  - [Pasos para usar Terraform](#pasos-para-usar-terraform)
+  - [Notas](#notas)
 
 ---
 
@@ -151,6 +141,7 @@ Este proyecto incluye una configuración completa de Terraform para automatizar 
 ### Prerequisitos para Terraform
 
 1. **Terraform instalado** (versión >= 1.0):
+
    ```bash
    # En Ubuntu/Debian
    wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -159,12 +150,13 @@ Este proyecto incluye una configuración completa de Terraform para automatizar 
    ```
 
 2. **AWS CLI configurado** con credenciales válidas:
+
    ```bash
    # Instalar AWS CLI
    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
    unzip awscliv2.zip
    sudo ./aws/install
-   
+
    # Configurar credenciales
    aws configure
    ```
@@ -178,11 +170,13 @@ Este proyecto incluye una configuración completa de Terraform para automatizar 
 ### Configuración de Terraform
 
 1. **Navegar al directorio de Terraform:**
+
    ```bash
    cd terraform/
    ```
 
 2. **Crear archivo de variables personalizado:**
+
    ```bash
    cp terraform.tfvars.example terraform.tfvars
    ```
@@ -200,20 +194,23 @@ Este proyecto incluye una configuración completa de Terraform para automatizar 
 ### Despliegue con Terraform
 
 1. **Inicializar Terraform:**
+
    ```bash
    terraform init
    ```
 
 2. **Revisar el plan de ejecución:**
+
    ```bash
    terraform plan
    ```
 
 3. **Aplicar la configuración:**
+
    ```bash
    terraform apply
    ```
-   
+
    Terraform te mostrará los recursos que va a crear y pedirá confirmación. Escribe `yes` para continuar.
 
 4. **Obtener información de la infraestructura creada:**
@@ -224,6 +221,7 @@ Este proyecto incluye una configuración completa de Terraform para automatizar 
 ### Gestión de la infraestructura
 
 **Recursos que crea Terraform:**
+
 - **Instancia EC2** con Ubuntu 22.04 LTS
 - **Security Group** con puertos necesarios abiertos (22, 80, 3000, 5000, 3307)
 - **Elastic IP** para IP pública estática
@@ -251,10 +249,12 @@ terraform output -raw ssh_connection_command
 ```
 
 **Actualización automática de la aplicación:**
+
 - La instancia incluye un script `/home/ubuntu/app/update-app.sh` que puedes usar para actualizar las imágenes Docker
 - El pipeline de CI/CD puede ejecutar este script automáticamente vía SSH
 
 **Monitoreo y logs:**
+
 ```bash
 # Conectarse a la instancia
 ssh -i ~/.ssh/id_rsa ubuntu@$(terraform output -raw instance_public_ip)
@@ -408,5 +408,68 @@ Los workflows se activan al hacer push a la rama `main` de los repositorios. El 
 ![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-07.png)
 ![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-08.png)
 ![pipeline back](./capturas-pipeline-backend/captura-pipeline-backend-09.png)
+
+## Infraestructura mínima con Terraform
+
+Se incluye un archivo de ejemplo `terraform-ec2.tf` para crear la infraestructura básica necesaria para desplegar este proyecto en AWS usando una instancia EC2 lista para Docker Compose.
+En la práctica no lo utilizamos porque estabamos utilizando el plan gratuito de AWS y temíamos que si creabamos otra instancia nos comenzaran a cobrar, pero es un ejemplo funcional que puede ser utilizado para desplegar la aplicación en una instancia EC2.
+Este archivo crea una instancia EC2 con Ubuntu 22.04, un grupo de seguridad con los puertos necesarios abiertos (SSH, HTTP, y los puertos utilizados por la aplicación), y un Elastic IP para acceso público.
+
+### Pasos para usar Terraform
+
+1. **Instalar Terraform y AWS CLI**
+
+   - Terraform: https://learn.hashicorp.com/tutorials/terraform/install-cli
+   - AWS CLI: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+2. **Configurar las credenciales de AWS**
+
+   ```bash
+   aws configure
+   ```
+
+3. **Asegúrarsee de tener una clave SSH pública**
+
+   ```bash
+   ls ~/.ssh/id_rsa.pub
+   # Si no existe, generar una:
+   ssh-keygen -t rsa -b 4096 -C "tu-email@ejemplo.com"
+   ```
+
+4. **Inicializar y aplicar Terraform**
+
+   ```bash
+   terraform init
+   terraform apply
+   # Escribir 'yes' cuando lo solicite
+   ```
+
+5. **Conectarse a la instancia**
+
+   - Al finalizar, Terraform mostrará la IP pública y el comando SSH para conectarte:
+     ```bash
+     ssh -i ~/.ssh/id_rsa ubuntu@<IP_PUBLICA>
+     ```
+
+6. **Desplegar la aplicación**
+   - Una vez conectado, se puede clonar este repositorio y levantar los servicios:
+     ```bash
+     git clone <URL_DEL_REPO> app
+     cd app
+     docker-compose up -d
+     ```
+
+### Notas
+
+- El archivo `terraform-ec2.tf` crea:
+  - Una instancia EC2 Ubuntu 22.04
+  - Un grupo de seguridad con puertos abiertos para SSH (22), HTTP (80), y los puertos usados por la app (3000, 5000, 3307)
+  - Un Elastic IP
+  - Instala Docker y Docker Compose automáticamente
+- Se pueden modificar los valores de las variables al inicio del archivo para personalizar la región, tipo de instancia, nombre de clave, etc.
+- Para destruir la infraestructura:
+  ```bash
+  terraform destroy
+  ```
 
 ---

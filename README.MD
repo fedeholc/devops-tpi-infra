@@ -149,7 +149,7 @@ Ambos archivos comparten la siguiente arquitectura:
 2. **Configurar el archivo .env del backend:**
 
    ```bash
-   cd backend
+   cd devops-tpi-backend
    cp .env.example .env
    # Editar .env con las configuraciones necesarias
    ```
@@ -157,7 +157,7 @@ Ambos archivos comparten la siguiente arquitectura:
 3. **Ejecutar el entorno de desarrollo:**
 
    ```bash
-   cd ../infra
+   cd devops-tpi-infra
    docker-compose -f docker-compose.dev.yml up --build
    ```
 

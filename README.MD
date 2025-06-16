@@ -1,4 +1,4 @@
-# Seminario de Actualización dev ops - 3°B <!-- omit in toc -->
+# Seminario de Actualización dev ops <!-- omit in toc -->
 
 ## Trabajo Práctico Integrador <!-- omit in toc -->
 

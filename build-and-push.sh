@@ -13,7 +13,7 @@ if ! sudo docker info | grep -q "Username"; then
 fi
 
 echo "🏗️ Construyendo imagen del backend..."
-cd ../backend
+cd ../devops-tpi-backend
 sudo docker build -t $DOCKERHUB_USERNAME/pp4-backend:$VERSION .
 
 if [ $? -eq 0 ]; then
@@ -25,7 +25,7 @@ else
 fi
 
 echo "🏗️ Construyendo imagen del frontend..."
-cd ../frontend
+cd ../devops-tpi-front
 sudo docker build -t $DOCKERHUB_USERNAME/pp4-frontend:$VERSION .
 
 if [ $? -eq 0 ]; then
@@ -42,4 +42,4 @@ echo "   - $DOCKERHUB_USERNAME/pp4-backend:$VERSION"
 echo "   - $DOCKERHUB_USERNAME/pp4-frontend:$VERSION"
 
 # Volver al directorio infra
-cd ../infra
+cd ../devops-tpi-infra

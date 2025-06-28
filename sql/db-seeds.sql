@@ -1,3 +1,4 @@
+SET NAMES 'utf8mb4';
 -- Evitar conflictos de claves externas al recrear
 SET FOREIGN_KEY_CHECKS = 0;
 

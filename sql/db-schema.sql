@@ -83,7 +83,7 @@ CREATE TABLE PedidoDisponibilidad (
     id INT PRIMARY KEY AUTO_INCREMENT,
     pedidoId int,
     clienteId int,
-    dia ENUM('lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'),
+    dia ENUM('lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'),
     horaInicio TIME,
     horaFin TIME,
     FOREIGN KEY (clienteId) REFERENCES Cliente(id),

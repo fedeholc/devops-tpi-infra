@@ -66,13 +66,13 @@ INSERT INTO Pedido (id, clienteId, tecnicoId, estado, areaId, requerimiento, cal
 INSERT INTO PedidoDisponibilidad (id, pedidoId, clienteId, dia, horaInicio, horaFin) VALUES
 (1, 1, 1, 'lunes', '09:00:00', '12:00:00'),
 (2, 1, 1, 'martes', '10:00:00', '13:00:00'),
-(3, 1, 1, 'miércoles', '14:00:00', '17:00:00'),
+(3, 1, 1, 'miercoles', '14:00:00', '17:00:00'),
 (4, 1, 1, 'jueves', '15:00:00', '18:00:00'),
 (5, 1, 1, 'viernes', '16:00:00', '19:00:00'),
 
 -- Pedido 2
 (6, 2, 2, 'lunes', '08:00:00', '10:00:00'),
-(7, 2, 2, 'miércoles', '11:00:00', '13:00:00'),
+(7, 2, 2, 'miercoles', '11:00:00', '13:00:00'),
 
 -- Pedido 3
 (8, 3, 3, 'martes', '09:30:00', '12:30:00'),
@@ -80,11 +80,11 @@ INSERT INTO PedidoDisponibilidad (id, pedidoId, clienteId, dia, horaInicio, hora
 
 -- Pedido 4
 (10, 4, 4, 'viernes', '10:00:00', '12:00:00'),
-(11, 4, 4, 'sábado', '15:00:00', '18:00:00'),
+(11, 4, 4, 'sabado', '15:00:00', '18:00:00'),
 
 -- Pedido 5
 (12, 5, 5, 'lunes', '13:00:00', '15:00:00'),
-(13, 5, 5, 'miércoles', '16:00:00', '18:00:00');
+(13, 5, 5, 'miercoles', '16:00:00', '18:00:00');
 
 INSERT INTO PedidoCandidatos (id, pedidoId, tecnicoId) VALUES
 -- Pedido 5

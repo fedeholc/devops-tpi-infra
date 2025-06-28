@@ -9,7 +9,9 @@
 - **Martín López** (comisión B)
 - **Agustina Kopistinski** (comisión A)
 
----
+### Video coloquio de presentación del proyecto
+
+https://drive.google.com/file/d/1dnl-BJNTFASBag9Fs0EBkId2mz0omwjX/view
 
 # Tabla de Contenidos <!-- omit in toc -->
 
